@@ -1,0 +1,290 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Booking.com Host – Prototype</title>
+<style>
+:root{--bg:#f2f6fa;--cd:#fff;--tx:#1a1a1a;--mu:#5e6670;--nv:#003b95;--pr:#006ce4;--lt:#ebf3ff;--ln:#dde3ea;--ok:#008234;--okb:#e6f4ea;--er:#c0262d;--erb:#fdecea;--bk:#cfe3fb;--bl:#e4e7eb;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#10151b;--cd:#1b222b;--tx:#f1f3f5;--mu:#a3acb6;--pr:#4c9bf5;--lt:#1c2f48;--ln:#2d3743;--ok:#5fd08a;--okb:#16301f;--er:#ff7b80;--erb:#3a1c1e;--bk:#1e3f6b;--bl:#2a323c;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#10151b;--cd:#1b222b;--tx:#f1f3f5;--mu:#a3acb6;--pr:#4c9bf5;--lt:#1c2f48;--ln:#2d3743;--ok:#5fd08a;--okb:#16301f;--er:#ff7b80;--erb:#3a1c1e;--bk:#1e3f6b;--bl:#2a323c;color-scheme:dark}
+*{box-sizing:border-box}html,body{height:100%;margin:0}body{background:var(--bg);color:var(--tx);font:15px/1.4 BlinkMacSystemFont,Roboto,"Segoe UI",Helvetica,Arial,sans-serif}
+button,input,textarea{font:inherit;color:inherit}button{cursor:pointer;border:0;background:none}
+#app{height:100%;max-width:520px;margin:auto;display:flex;flex-direction:column;position:relative;background:var(--bg)}
+header{background:var(--nv);color:#fff;display:flex;align-items:center;gap:8px;padding:12px 16px;min-height:56px}header h1{font-size:18px;margin:0;font-weight:700;flex:1}header .sub{font-size:12px;opacity:.85;font-weight:400;display:block}
+.bk{color:#fff;width:32px;height:32px;display:grid;place-items:center;margin-left:-8px}
+.logo{font-weight:800;font-size:20px;letter-spacing:-.3px}.logo b{color:#4da3ff}
+main{flex:1;overflow:auto;padding:16px}
+.i{width:22px;height:22px}
+nav{display:flex;background:var(--cd);border-top:1px solid var(--ln)}nav button{flex:1;padding:8px 0 7px;font-size:11px;color:var(--mu);display:flex;flex-direction:column;align-items:center;gap:2px;position:relative}nav button.on{color:var(--pr);font-weight:700}
+.bd{position:absolute;top:3px;left:calc(50% + 6px);background:var(--er);color:#fff;font-size:10px;min-width:16px;height:16px;border-radius:8px;display:grid;place-items:center;font-weight:700}
+.cd{background:var(--cd);border:1px solid var(--ln);border-radius:8px;padding:14px;margin-bottom:12px;width:100%;text-align:left;display:block}
+h2{font-size:17px;margin:4px 0 10px}h3{font-size:15px;margin:0 0 4px}.mu{color:var(--mu);font-size:13px}
+.row{display:flex;align-items:center;gap:12px}.row>.g{flex:1;min-width:0}
+.b{display:block;width:100%;padding:12px 16px;border-radius:8px;font-weight:700;text-align:center;margin-top:8px}.p{background:var(--pr);color:#fff}.s{border:1px solid var(--pr);color:var(--pr)}.t{color:var(--pr)}.b.off{background:var(--bl);color:var(--mu);border:0}
+.bs{display:inline-block;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:700;background:var(--okb);color:var(--ok)}.bs.n{background:var(--bl);color:var(--mu)}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--pr);flex:none}
+.av{width:40px;height:40px;border-radius:50%;background:var(--lt);color:var(--pr);display:grid;place-items:center;font-weight:700;flex:none}
+.att{border-left:4px solid var(--pr)}
+.tabs{display:flex;gap:6px;margin-bottom:12px}.tabs button{padding:8px 14px;border-radius:20px;border:1px solid var(--ln);background:var(--cd);font-size:14px}.tabs .on{background:var(--pr);color:#fff;border-color:var(--pr);font-weight:700}
+.kv{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--ln)}.kv:last-child{border:0}.kv span:first-child{color:var(--mu)}.kv span:last-child{text-align:right;font-weight:600}.kv .no{color:var(--mu);font-weight:400;font-style:italic}
+.em{color:var(--er);font-size:13px;margin:6px 0 0;display:flex;gap:6px}.emb{background:var(--erb);color:var(--er);padding:10px 12px;border-radius:8px;font-size:14px;margin-top:8px}
+.empty{text-align:center;padding:32px 16px;color:var(--mu)}.empty b{display:block;color:var(--tx);font-size:16px;margin-bottom:4px}
+.mh{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}.mh h2{margin:0}.mh button{width:36px;height:36px;border-radius:50%;border:1px solid var(--ln);display:grid;place-items:center;background:var(--cd)}.mh button:disabled{opacity:.3}
+.wd,.gr{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}.wd span{text-align:center;font-size:12px;color:var(--mu);padding:4px 0}
+.gr button{aspect-ratio:.78;border-radius:8px;border:1px solid var(--ln);background:var(--cd);display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:4px 1px;font-size:14px;font-weight:600;overflow:hidden;line-height:1.2}.gr small{font-size:10.5px;font-weight:400;color:var(--mu);margin-top:2px;max-width:100%;overflow:hidden;white-space:nowrap}
+.gr .pa{opacity:.38;cursor:default}.gr .bo{background:var(--bk);border-color:var(--bk)}.gr .bo small{color:var(--nv);font-weight:700}.gr .bl{background:repeating-linear-gradient(135deg,var(--bl) 0 4px,var(--cd) 4px 8px);color:var(--mu)}.gr .td{border:2px solid var(--nv)}.gr .sl{background:var(--pr);border-color:var(--pr);color:#fff}.gr .sl small{color:#fff}
+.gr .e{visibility:hidden}.lg{display:flex;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--mu);margin:12px 0}.lg i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:4px;vertical-align:-2px;border:1px solid var(--ln)}
+.sh{background:var(--cd);border-top:1px solid var(--ln);padding:12px 16px;box-shadow:0 -4px 12px rgba(0,0,0,.08)}.sh .two{display:flex;gap:8px}.sh .b{margin-top:8px}
+.x{float:right;width:32px;height:32px;display:grid;place-items:center;color:var(--mu)}
+.ov{position:absolute;inset:0;background:rgba(0,0,0,.55);display:flex;align-items:flex-end;z-index:5}.md{background:var(--cd);width:100%;border-radius:16px 16px 0 0;padding:20px 16px 20px;max-height:92%;overflow:auto}
+.md h2{margin-top:0}.md ul{padding-left:20px;margin:8px 0}.sum{background:var(--lt);border-radius:8px;padding:10px 12px;font-weight:700}
+.fld{display:flex;align-items:center;gap:8px;border:2px solid var(--ln);border-radius:8px;padding:10px 12px;font-size:20px;font-weight:700;margin-top:10px}.fld:focus-within{border-color:var(--pr)}.fld.er{border-color:var(--er)}.fld input{flex:1;min-width:0;border:0;background:none;font-size:20px;font-weight:700;outline:0}.fld span{color:var(--mu);font-size:14px;font-weight:400}
+.ok{width:56px;height:56px;border-radius:50%;background:var(--okb);color:var(--ok);display:grid;place-items:center;margin:0 auto 12px}.ok .i{width:30px;height:30px}.ctr{text-align:center}
+.sp{width:36px;height:36px;border:4px solid var(--ln);border-top-color:var(--pr);border-radius:50%;margin:12px auto;animation:r .8s linear infinite}@keyframes r{to{transform:rotate(360deg)}}
+.toast{position:absolute;left:16px;right:16px;bottom:76px;background:#262626;color:#fff;padding:12px 14px;border-radius:8px;z-index:9;font-size:14px}
+.ms{display:flex;flex-direction:column;gap:8px}.m{max-width:80%;padding:10px 12px;border-radius:12px;background:var(--cd);border:1px solid var(--ln);align-self:flex-start}.m.h{align-self:flex-end;background:var(--pr);color:#fff;border-color:var(--pr)}.m small{display:block;opacity:.75;font-size:11px;margin-top:4px}
+.cmp{padding:10px 12px;background:var(--cd);border-top:1px solid var(--ln)}.cmp .rw{display:flex;gap:8px;align-items:flex-end}.cmp textarea{flex:1;border:1px solid var(--ln);border-radius:20px;padding:10px 14px;resize:none;background:var(--bg);outline:0;max-height:100px}.cmp .b{width:auto;margin:0;border-radius:20px}
+.ph{height:120px;border-radius:8px;background:linear-gradient(135deg,var(--nv),var(--pr));color:#fff;display:grid;place-items:center;font-weight:700;margin-bottom:10px}
+:focus-visible{outline:2px solid var(--pr);outline-offset:2px}
+.ab{color:#fff;width:34px;height:34px;display:grid;place-items:center;border-radius:50%;background:rgba(255,255,255,.18);flex:none}
+.pg{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:8px}.pt{border-radius:8px;aspect-ratio:4/3;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;position:relative;font-size:13px;color:var(--mu);background:var(--bl);width:100%}.pt.m{grid-column:span 2;aspect-ratio:16/7}.tg{position:absolute;top:6px;left:6px;background:var(--nv);color:#fff;font-size:11px;padding:2px 6px;border-radius:4px}
+.sw{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--ln);width:100%;text-align:left}.sw i{width:44px;height:26px;border-radius:13px;background:var(--bl);position:relative;flex:none}.sw i:after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:.15s}.sw.on i{background:var(--pr)}.sw.on i:after{left:21px}
+.in{width:100%;border:1px solid var(--ln);border-radius:8px;padding:10px 12px;background:var(--cd);margin:4px 0 10px;font:inherit;color:inherit;display:block}label.l{font-size:13px;color:var(--mu)}
+.opt{display:block;width:100%;text-align:left;border:2px solid var(--ln);border-radius:8px;padding:12px;margin-bottom:8px;background:var(--cd)}.opt.on{border-color:var(--pr);background:var(--lt)}
+.br{display:flex;align-items:flex-end;gap:12px;height:120px;margin:8px 0}.br div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;font-size:12px;height:100%;gap:2px}.br b{display:block;width:100%;background:var(--bk);border-radius:4px 4px 0 0}.br .on b{background:var(--pr)}
+.pend{background:#fff4d6;border-color:#f5d999;border-left:4px solid #e69e00}.pend h3{color:#7a5200}.pend .mu{color:#5c3d00}.pc{background:var(--bg);border:1px solid var(--ln);border-radius:8px;padding:10px 12px;margin-top:10px}.pc .lb{font-size:12px;font-weight:700;color:var(--mu);letter-spacing:.3px}.pr2{display:flex;justify-content:space-between;gap:12px;margin-top:4px}.pr2 span:first-child{color:var(--mu)}.cb{background:#f4f6f9;border:1px solid #dadfe5;border-radius:8px;padding:10px 12px;margin-bottom:8px}.cb h3{font-size:14px;margin:0 0 2px}.cb .mu{font-size:14px}.pill{display:inline-block;padding:4px 12px;border-radius:13px;font-size:13px;font-weight:700;background:#fff4d6;color:#7a5200;margin:2px 0 4px}.nl{list-style:none;padding:0;margin:8px 0 0}.nl li{display:flex;gap:8px;margin-bottom:8px;color:var(--mu);font-size:14px}.nl li:before{content:counter(n);counter-increment:n;flex:none;width:20px;height:20px;border-radius:50%;background:#006ce4;color:#fff;font-size:12px;font-weight:700;display:grid;place-items:center}.nl{counter-reset:n}.bs.rd{background:var(--erb);color:var(--er)}.bs.am{background:#fff4d6;color:#7a5200}.warn{background:#fff4d6;color:#5c3d00;padding:10px 12px;border-radius:8px;font-size:13px;margin:8px 0}
+</style></head><body><div id="app"></div>
+<script>
+const FAIL_FIRST=true; // first save of each kind fails once so the error/retry state can be observed; set false to disable
+const MN=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],WD=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const pd=s=>new Date(s+'T00:00:00Z'),iso=d=>d.toISOString().slice(0,10),add=(s,n)=>iso(new Date(pd(s).getTime()+n*864e5));
+const f=s=>pd(s).getUTCDate()+' '+MN[pd(s).getUTCMonth()],fw=s=>WD[pd(s).getUTCDay()]+' '+f(s);
+const nn=(a,b)=>Math.round((pd(b)-pd(a))/864e5);const TODAY='2026-11-07';
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let PROP='Vilnius Old Town Apartment';
+const RES=[
+{id:'r1',g:'Marta Kowalska',in:'2026-11-09',out:'2026-11-12',n:2,st:'Confirmed',arr:'22:00',rq:'Late arrival around 22:00. Needs a baby cot.'},
+{id:'r2',g:'Daniel Okafor',in:'2026-11-14',out:'2026-11-17',n:3,st:'Confirmed',arr:null,rq:null},
+{id:'r3',g:'Sofia Rossi',in:'2026-11-24',out:'2026-11-28',n:2,st:'Confirmed',arr:'16:00',rq:'Two large suitcases. Is there a lift?'},
+{id:'r4',g:'Tom Becker',in:'2026-12-05',out:'2026-12-08',n:4,st:'Confirmed',arr:'15:00',rq:null},
+{id:'p1',g:'Anna Virtanen',in:'2026-10-20',out:'2026-10-24',n:2,st:'Completed',arr:'14:00',rq:null},
+{id:'p2',g:'Pierre Martin',in:'2026-10-02',out:'2026-10-05',n:2,st:'Completed',arr:'18:00',rq:null}];
+const S={tab:'home',view:null,rt:'up',cal:{m:'2026-11',a:null,b:null},blocked:new Set(),over:{},modal:null,toast:null,fail:{},draft:'',err:null,sErr:null,pv:'',undo:null,ok:null,
+c:{r1:{u:1,m:[{f:'g',t:'Hi! We’ll arrive around 22:00. Is self check-in possible?',ts:'Today 09:12'}]},r2:{u:0,m:[]},r3:{u:1,m:[{f:'g',t:'Hello! Is there a lift in the building? We have two large suitcases.',ts:'Yesterday 18:40'}]},r4:{u:0,m:[{f:'h',t:'Welcome Tom! Check-in is from 15:00.',ts:'2 Nov'},{f:'g',t:'Thanks, see you soon!',ts:'2 Nov'}]}}};
+const R=id=>RES.find(r=>r.id===id);
+const bookOn=d=>RES.find(r=>r.st==='Confirmed'&&r.in<=d&&d<r.out);
+const price=d=>S.over[d]??([5,6].includes(pd(d).getUTCDay())?69:64);
+const IC={home:'<path d="M3 11l9-8 9 8v10h-6v-6H9v6H3z"/>',cal:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',res:'<path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/>',chat:'<path d="M4 5h16v11H9l-5 4z"/>',prop:'<path d="M4 21V4h10v17M14 9h6v12M8 8h2M8 12h2M8 16h2"/>',back:'<path d="M15 5l-7 7 7 7"/>',x:'<path d="M6 6l12 12M18 6L6 18"/>',chev:'<path d="M9 5l7 7-7 7"/>',check:'<path d="M5 12l5 5 9-10"/>',l:'<path d="M15 5l-7 7 7 7"/>',r:'<path d="M9 5l7 7-7 7"/>'};
+const ic=n=>`<svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IC[n]}</svg>`;
+const ini=g=>g.split(' ').map(w=>w[0]).join('');
+const unread=()=>Object.values(S.c).filter(c=>c.u).length;
+const nights=()=>{const r=[];let d=S.cal.a;while(d&&d<=S.cal.b){r.push(d);d=add(d,1)}return r};
+const rtxt=()=>{const {a,b}=S.cal,n=nights().length;return (a===b?fw(a):f(a)+' – '+f(b))+' · '+n+' night'+(n>1?'s':'')};
+const toast=t=>{S.toast=t;render();setTimeout(()=>{S.toast=null;render()},2600)};
+
+function head(t,back,sub){return `<header>${back?`<button class="bk" data-a="back" aria-label="Back">${ic('back')}</button>`:''}<h1>${t}${sub?`<span class="sub">${sub}</span>`:''}</h1>${AB}</header>`}
+function resCard(r){const d=Math.round((pd(r.in)-pd(TODAY))/864e5);return `<button class="cd" data-a="res:${r.id}"><div class="row"><div class="av">${ini(r.g)}</div><div class="g"><h3>${r.g}</h3><div class="mu">${f(r.in)} – ${f(r.out)} · ${r.n} guests</div>${d>=0&&r.st==='Confirmed'?`<div class="mu">${d===0?'Checks in today':d===1?'Checks in tomorrow':'Checks in in '+d+' days'}</div>`:''}</div>${stb(r)}</div></button>`}
+const up=()=>RES.filter(r=>r.out>TODAY&&r.st!=='Cancelled').sort((a,b)=>a.in<b.in?-1:1);
+
+function home(){const u=unread(),n=up()[0];
+return `<h2 style="font-size:22px;margin-top:0">Good morning</h2><p class="mu" style="margin:-6px 0 14px">${PROP}</p>
+${RES.filter(r=>r.cr).map(r=>`<button class="cd pend" data-a="res:${r.id}"><div class="row"><div class="g"><h3>Cancellation request awaiting review</h3><div class="mu">${r.g} · ${pd(r.in).getUTCMonth()===pd(r.out).getUTCMonth()?pd(r.in).getUTCDate():f(r.in)} – ${f(r.out)} · not cancelled yet</div></div>${ic('chev')}</div></button>`).join('')}
+${u?`<button class="cd att" data-a="tab:inbox"><div class="row"><div class="g"><h3>${u} new message${u>1?'s':''}</h3><div class="mu">Guests are waiting for a reply</div></div>${ic('chev')}</div></button>`:''}
+${n?`<button class="cd att" data-a="res:${n.id}"><div class="row"><div class="g"><h3>Next check-in: ${n.g}</h3><div class="mu">${fw(n.in)} · ${n.n} guests${n.rq?' · Has a request':''}</div></div>${ic('chev')}</div></button>`:''}
+<button class="cd att" data-a="res:r5"><div class="row"><div class="g"><h3>Guest cancellation: Elena Petrova</h3><div class="mu">21 – 24 Nov · dates are available again</div></div>${ic('chev')}</div></button><h2>Earnings</h2><button class="cd" data-a="sub:wallet"><div class="row"><div class="g"><h3>€1,462 estimated net · November</h3><div class="mu">€0 received · €1,462 still to come (illustrative)</div></div>${ic('chev')}</div></button><h2>Calendar</h2><div class="cd"><div class="mu">Manage availability and nightly prices</div><div style="display:flex;gap:8px"><button class="b s" data-a="tab:cal">Block dates</button><button class="b s" data-a="tab:cal">Change prices</button></div></div>
+<div class="mh"><h2>Upcoming reservations</h2><button class="t" style="width:auto;border:0;background:none;font-weight:700;display:block" data-a="tab:res">See all</button></div>
+${up().slice(0,3).map(resCard).join('')}`}
+
+function resList(){const l=S.rt==='up'?up():S.rt==='past'?RES.filter(r=>r.out<=TODAY&&r.st!=='Cancelled'):RES.filter(r=>r.st==='Cancelled');
+return `<div class="tabs">${[['up','Upcoming'],['past','Past'],['cx','Cancelled']].map(([k,v])=>`<button class="${S.rt===k?'on':''}" data-a="rt:${k}">${v}</button>`).join('')}</div>${l.length?l.map(resCard).join(''):`<div class="empty"><b>No ${S.rt==='cx'?'cancelled':S.rt==='up'?'upcoming':'past'} reservations</b>Reservations will appear here.</div>`}`}
+
+function resView(r){const kv=(k,v)=>`<div class="kv"><span>${k}</span><span>${v}</span></div>`,miss='<span class="no">Not provided</span>',cur=r.out>TODAY&&r.st!=='Cancelled';
+return `<div class="cd"><div class="row"><div class="av">${ini(r.g)}</div><div class="g"><h3>${r.g}</h3>${stb(r)}</div></div></div>
+<div class="cd">${kv('Property',PROP)}${kv('Check-in',fw(r.in)+' from '+S.ci.in)}${kv('Check-out',fw(r.out)+' until '+S.ci.out)}${kv('Length of stay',nn(r.in,r.out)+' nights')}${kv('Guests',r.n+' guests')}${kv('Expected arrival',r.arr||miss)}</div>
+<div class="cd"><h3>Guest requests</h3>${r.rq?`<div>${esc(r.rq)}</div>`:'<div class="mu">No special requests</div>'}</div>
+${cxCard(r)}${cur?ciCard():''}${cur?`<button class="b p" data-a="chat:${r.id}:res">Message ${r.g.split(' ')[0]}</button>`:''}${cur&&!r.cr?`<button class="b s" style="margin-top:20px" data-a="cx:${r.id}">Need to cancel this reservation?</button>`:''}`}
+
+function inbox(){return Object.keys(S.c).map(id=>{const r=R(id),c=S.c[id],l=c.m[c.m.length-1];return `<button class="cd" data-a="chat:${id}:inbox"><div class="row"><div class="av">${ini(r.g)}</div><div class="g"><h3>${r.g}</h3><div class="mu" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${l?esc(l.t):'No messages yet'}</div><div class="mu">${f(r.in)} – ${f(r.out)}</div></div>${c.u?'<span class="dot" aria-label="Unread"></span>':''}</div></button>`}).join('')}
+
+function chat(id){const r=R(id),c=S.c[id];
+return `<div class="ms">${c.m.length?c.m.map(m=>`<div class="m ${m.f}">${esc(m.t)}<small>${m.f==='h'?(m.s==='s'?'Sending…':m.ts+(m.s==='d'?' · Delivered ✓':'')):m.ts}</small></div>`).join(''):`<div class="empty"><b>No messages yet</b>Your conversation with ${r.g.split(' ')[0]} will appear here.</div>`}</div>`}
+
+function prop0(){const kv=(k,v)=>`<div class="kv"><span>${k}</span><span>${v}</span></div>`;
+return `<div class="ph">Old Town · Vilnius</div><div class="cd"><h3>${PROP}</h3><div class="mu">${S.pr.type} · Vilnius, Lithuania</div><p><span class="bs">Online</span></p></div>
+<div class="cd"><h3>Pricing</h3>${kv('Standard price','€64 per night')}${kv('Weekend price','€69 per night')}<button class="b s" data-a="tab:cal">Change prices in calendar</button></div>
+<div class="cd"><h3>Availability</h3>${kv('Minimum stay','1 night')}${kv('Maximum stay','30 nights')}<button class="b s" data-a="tab:cal">Block dates in calendar</button></div>
+<div class="cd"><h3>Guests and rules</h3>${kv('Maximum guests',S.pr.g+' guests')}${kv('Pets',S.ru.pets?'Allowed':'Not allowed')}${kv('Smoking',S.ru.smoke?'Allowed':'Not allowed')}${kv('Cancellation policy',S.pol)}</div>`}
+
+function calView(){const [y,m]=S.cal.m.split('-').map(Number),first=new Date(Date.UTC(y,m-1,1)),lead=(first.getUTCDay()+6)%7,days=new Date(Date.UTC(y,m,0)).getUTCDate(),{a,b}=S.cal;
+let g='';for(let i=0;i<lead;i++)g+='<button class="e" tabindex="-1" aria-hidden="true"></button>';
+for(let d=1;d<=days;d++){const k=S.cal.m+'-'+String(d).padStart(2,'0'),bk=bookOn(k),bl=S.blocked.has(k),sl=a&&k>=a&&k<=b,pa=k<TODAY;
+let cl=pa?'pa':bk?'bo':bl?'bl':'';if(sl)cl+=' sl';if(k===TODAY)cl+=' td';
+const sm=bk?(k===bk.in?bk.g.split(' ')[0]:''):bl?'✕':'€'+price(k);
+g+=`<button class="${cl}" data-a="day:${k}" aria-label="${fw(k)}${bk?', booked':bl?', blocked':', €'+price(k)}"${pa?' aria-disabled="true"':''}>${d}<small>${sm}</small></button>`}
+const prev=S.cal.m<='2026-11',next=S.cal.m>='2027-03';
+return `<div class="mh"><button data-a="mo:-1" ${prev?'disabled':''} aria-label="Previous month">${ic('l')}</button><h2>${MN[m-1]} ${y}</h2><button data-a="mo:1" ${next?'disabled':''} aria-label="Next month">${ic('r')}</button></div>
+<div class="wd">${['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map(x=>`<span>${x}</span>`).join('')}</div><div class="gr">${g}</div>
+<div class="lg"><span><i></i>Available</span><span><i style="background:var(--bk)"></i>Booked</span><span><i style="background:var(--bl)"></i>Blocked</span><span><i style="background:var(--pr)"></i>Selected</span></div>`}
+
+function sheet(){const {a}=S.cal;if(!a)return'';const ns=nights(),bks=[...new Set(ns.map(bookOn).filter(Boolean))],allBl=ns.every(d=>S.blocked.has(d)&&!bookOn(d)),ps=ns.map(price),lo=Math.min(...ps),hi=Math.max(...ps);
+return `<div class="sh"><button class="x" data-a="clr" aria-label="Clear selection">${ic('x')}</button><h3>${rtxt()}</h3>
+<div>${bks.length?`Booked: ${bks.map(r=>r.g).join(', ')}`:allBl?'Blocked':'Available'} · <b>${lo===hi?'€'+lo:'€'+lo+'–€'+hi}</b> per night</div>
+${S.sErr?`<div class="emb">${S.sErr}</div>`:''}
+<div class="two"><button class="b s" data-a="openPrice">Edit price</button>${allBl?`<button class="b p" data-a="openUnblock">Unblock dates</button>`:`<button class="b p ${bks.length?'off':''}" data-a="openBlock">Block dates</button>`}</div></div>`}
+
+function modal(){const m=S.modal;if(!m)return'';const X=`<button class="x" data-a="mx" aria-label="Close">${ic('x')}</button>`,n=nights().length,s=n>1?'s':'',free=nights().filter(d=>!bookOn(d));let h='';
+if(m.t==='block')h=`${X}<h2>Block ${n} night${s}?</h2><div class="sum">${rtxt()}</div><ul><li>Guests won’t be able to book these nights on Booking.com.</li><li>Your reservations are not affected.</li><li>You can unblock the dates at any time.</li></ul><button class="b p" data-a="save:block">Block dates</button><button class="b s" data-a="mx">Cancel</button>`;
+if(m.t==='unblock')h=`${X}<h2>Unblock ${n} night${s}?</h2><div class="sum">${rtxt()}</div><ul><li>Guests will be able to book these nights again.</li></ul><button class="b p" data-a="save:unblock">Unblock dates</button><button class="b s" data-a="mx">Cancel</button>`;
+if(m.t==='price'){const ps=free.map(price),lo=Math.min(...ps),hi=Math.max(...ps);h=`${X}<h2>Edit nightly price</h2><div class="sum">${rtxt()}</div><p class="mu" style="margin:8px 0 0">Current price: ${lo===hi?'€'+lo:'€'+lo+'–€'+hi} per night</p>
+<label class="mu" for="pin" style="display:block;margin-top:10px">New price for each night (EUR)</label><div class="fld ${m.err?'er':''}"><span>€</span><input id="pin" inputmode="numeric" autocomplete="off" value="${esc(S.pv)}"><span>per night</span></div>${m.err?`<p class="em">${m.err}</p>`:''}<button class="b p" data-a="review">Review change</button><button class="b s" data-a="mx">Cancel</button>`}
+if(m.t==='review'){const ps=free.map(price),lo=Math.min(...ps),hi=Math.max(...ps),sk=n-free.length;h=`${X}<h2>Review price change</h2><div class="cd"><div class="kv"><span>Dates</span><span>${rtxt()}</span></div><div class="kv"><span>Current</span><span>${lo===hi?'€'+lo:'€'+lo+'–€'+hi} per night</span></div><div class="kv"><span>New price</span><span style="color:var(--pr);font-size:18px">€${S.pv} per night</span></div></div>${sk?`<p class="mu">${sk} booked night${sk>1?'s':''} keep${sk>1?'':'s'} the original price.</p>`:''}<button class="b p" data-a="save:price">Confirm new price</button><button class="b s" data-a="editPrice">Edit price</button>`}
+if(m.t==='saving')h=`<div class="ctr"><div class="sp"></div><b>${m.txt}</b><p class="mu">Please wait</p></div>`;
+if(m.t==='err'&&m.k==='price'){const ps=nights().filter(d=>!bookOn(d)).map(price),lo=Math.min(...ps),hi=Math.max(...ps),cur=lo===hi?'€'+lo:'€'+lo+'–€'+hi;h=`${X}<h2>Your new price isn’t saved yet</h2><div class="emb"><b>⚠ Connection problem. Nothing was changed.</b></div><div class="pc"><div class="lb">YOUR CHANGE (NOT SAVED)</div><h3 style="margin:2px 0 4px">${rtxt()}</h3><div class="pr2"><span>Calendar now shows</span><span>${cur} per night</span></div><div class="pr2"><span>Waiting to save</span><b style="color:var(--pr)">€${S.pv} per night</b></div></div><p class="mu" style="font-size:14px">Your €${S.pv} entry is kept. Until it’s saved, guests still see ${cur} for these nights.</p><button class="b p" data-a="save:price">Try again – save €${S.pv}</button><button class="b s" data-a="editPrice">Edit price</button><button class="b" style="color:var(--mu)" data-a="mx">Discard change and keep ${cur}</button>`}
+if(m.t==='err'&&m.k!=='price')h=`${X}<h2>Couldn’t save changes</h2><div class="emb">${m.msg}</div><button class="b p" data-a="save:${m.k}">Try again</button>${m.k==='price'?`<button class="b s" data-a="editPrice">Edit price</button>`:''}<button class="b s" data-a="mx">Cancel</button>`;
+if(m.t==='ok')h=`<div class="ctr"><div class="ok">${ic('check')}</div><h2>${S.ok.title}</h2><p>${S.ok.body}</p></div><button class="b p" data-a="done">Done</button><button class="b s" data-a="undo">Undo</button>`;
+h+=modal2(m,X);return `<div class="ov"><div class="md" role="dialog" aria-modal="true">${h}</div></div>`}
+
+function render(){const mn=document.getElementById('mn'),sc=mn?mn.scrollTop:0,v=S.view;let h,b,sh='',nav=true,ch='';
+if(v&&v.t==='chat'){const r=R(v.id);h=`<header><button class="bk" data-a="back" aria-label="Back">${ic('back')}</button><h1>${r.g}<span class="sub">${f(r.in)} – ${f(r.out)} · ${PROP}</span></h1><button class="t" style="color:#fff;font-size:13px;font-weight:700" data-a="res:${v.id}">View reservation</button></header>`;b=chat(v.id);nav=false;
+ch=`<div class="cmp">${S.err?`<p class="em" id="merr" style="margin:0 0 6px">Write a message before sending.</p>`:''}<div class="rw"><textarea id="msg" rows="1" maxlength="500" placeholder="Write a message…" aria-label="Message">${esc(S.draft)}</textarea><button class="b p" data-a="send">Send</button></div></div>`}
+else if(v&&v.t==='res'){const r=R(v.id);h=head('Reservation',1,r.g);b=resView(r)}
+else if(v&&v.t==='sub'){h=head(SUBT[v.k],1);b=subs[v.k]()}
+else{const T={home:['',home],cal:['Calendar',calView],res:['Reservations',resList],inbox:['Inbox',inbox],prop:['Property',prop]}[S.tab];h=S.tab==='home'?`<header><span class="logo">Booking<b>.com</b></span><h1 style="text-align:right;font-size:14px;font-weight:400">Host</h1>${AB}</header>`:head(T[0]);b=T[1]();if(S.tab==='cal')sh=sheet()}
+const N=[['home','Home','home'],['cal','Calendar','cal'],['res','Reservations','res'],['inbox','Inbox','chat'],['prop','Property','prop']];
+document.getElementById('app').innerHTML=`${h}<main id="mn">${b}</main>${ch}${sh}${nav?`<nav>${N.map(([k,l,i])=>`<button class="${S.tab===k?'on':''}" data-a="tab:${k}" ${S.tab===k?'aria-current="page"':''}>${ic(i)}${l}${k==='inbox'&&unread()?`<span class="bd">${unread()}</span>`:''}</button>`).join('')}</nav>`:''}${modal()}${S.toast?`<div class="toast" role="status">${S.toast}</div>`:''}`;
+const m2=document.getElementById('mn');if(v&&v.t==='chat')m2.scrollTop=m2.scrollHeight;else m2.scrollTop=sc;
+const p=document.getElementById('pin');if(p&&S.modal&&S.modal.t==='price'&&!p.dataset.f){p.dataset.f=1;p.focus()}}
+
+function save(k){const m=S.modal;S.modal={t:'saving',txt:k==='price'?'Saving new price…':k==='block'?'Blocking dates…':'Unblocking dates…'};render();
+setTimeout(()=>{if(FAIL_FIRST&&k!=='unblock'&&!S.fail[k]){S.fail[k]=1;S.modal={t:'err',k,msg:k==='price'?'We couldn’t save your price change because of a connection problem. No prices were changed. Your new price is kept so you can try again.':'We couldn’t block these dates because of a connection problem. Your calendar was not changed.'};return render()}
+const ns=nights().filter(d=>!bookOn(d)),n=ns.length,s=n>1?'s':'';
+if(k==='block'){ns.forEach(d=>S.blocked.add(d));S.undo={k,ns};S.ok={title:'Dates blocked',body:`${rtxt()} are now unavailable to guests.`}}
+if(k==='unblock'){ns.forEach(d=>S.blocked.delete(d));S.undo={k,ns};S.ok={title:'Dates unblocked',body:`${rtxt()} can be booked again.`}}
+if(k==='price'){const prev={};ns.forEach(d=>{prev[d]=S.over[d];S.over[d]=+S.pv});S.undo={k,prev};S.ok={title:'Price updated',body:`€${S.pv} per night for ${rtxt()}.`}}
+S.modal={t:'ok'};render()},900)}
+
+document.addEventListener('input',e=>{if(e.target.id==='msg'){S.draft=e.target.value;if(S.err){S.err=null;const x=document.getElementById('merr');x&&x.remove()}}});
+document.addEventListener('click',e=>{const el=e.target.closest('[data-a]');if(!el)return;const [a,x,y]=el.dataset.a.split(':'),c=S.cal;if(act2(a,x,y,el))return;
+if(a==='tab'){S.tab=x;S.view=null;S.sErr=null}
+else if(a==='res')S.view={t:'res',id:x};
+else if(a==='rt')S.rt=x;
+else if(a==='back'){S.view=S.view.t==='chat'&&S.view.from==='res'?{t:'res',id:S.view.id}:null}
+else if(a==='chat'){S.c[x]&&(S.c[x].u=0);S.view={t:'chat',id:x,from:y};S.draft='';S.err=null}
+else if(a==='send'){const t=(document.getElementById('msg').value||'').trim(),id=S.view.id;if(!t){S.err=1;return render()}
+const msg={f:'h',t,ts:'Just now',s:'s'};S.c[id].m.push(msg);S.draft='';S.err=null;render();setTimeout(()=>{msg.s='d';render();toast('Message sent')},800);return}
+else if(a==='mo'){const [yy,mm]=c.m.split('-').map(Number),d=new Date(Date.UTC(yy,mm-1+ +x,1));c.m=iso(d).slice(0,7);c.a=c.b=null;S.sErr=null}
+else if(a==='day'){if(x<TODAY)return toast('Past dates can’t be selected');S.sErr=null;
+if(!c.a||c.a!==c.b)c.a=c.b=x;else if(x===c.a)c.a=c.b=null;else if(x>c.a)c.b=x;else{c.b=c.a;c.a=x}}
+else if(a==='clr'){c.a=c.b=null;S.sErr=null}
+else if(a==='openBlock'){const bk=nights().map(bookOn).find(Boolean);if(bk){S.sErr=`${bk.g} has a booking from ${f(bk.in)} to ${f(bk.out)}. Choose dates without a reservation.`}else{S.sErr=null;S.modal={t:'block'}}}
+else if(a==='openUnblock')S.modal={t:'unblock'};
+else if(a==='openPrice'){const fr=nights().filter(d=>!bookOn(d));if(!fr.length){S.sErr='Booked nights keep their original price. Choose dates without a reservation.'}else{S.sErr=null;const ps=[...new Set(fr.map(price))];S.pv=ps.length===1?String(ps[0]):'';S.modal={t:'price'}}}
+else if(a==='review'){const v=(document.getElementById('pin').value||'').trim();S.pv=v;let err=null;
+if(!v)err='Enter a price per night.';else if(!/^\d+$/.test(v))err='Use whole euros only, for example 75.';else if(+v<10)err='The minimum price is €10 per night.';else if(+v>1000)err='The maximum price is €1,000 per night.';
+S.modal=err?{t:'price',err}:{t:'review'}}
+else if(a==='editPrice')S.modal={t:'price'};
+else if(a==='save')return save(x);
+else if(a==='mx'){S.modal=null}
+else if(a==='done'){S.modal=null;c.a=c.b=null}
+else if(a==='undo'){const u=S.undo;if(u.k==='block')u.ns.forEach(d=>S.blocked.delete(d));if(u.k==='unblock')u.ns.forEach(d=>S.blocked.add(d));if(u.k==='price')Object.entries(u.prev).forEach(([d,v])=>v===undefined?delete S.over[d]:S.over[d]=v);S.modal=null;c.a=c.b=null;return toast('Change undone')}
+render()});
+/* ===== Extension: cancellations, property management, wallet, assistant, support ===== */
+RES.push({id:'r5',g:'Elena Petrova',in:'2026-11-21',out:'2026-11-24',n:2,st:'Cancelled',by:'guest',cd:'3 Nov 2026',pol:'Non-refundable',fee:'Full stay amount charged to the guest',imp:'Payout of €190 is still expected (illustrative)',arr:null,rq:null});
+IC.img='<rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="1.5"/><path d="M21 16l-5-5-8 8"/>';IC.ai='<path d="M12 3l2 5 5 2-5 2-2 5-2-5-5-2 5-2z"/>';
+const AB=`<button class="ab" data-a="ai" aria-label="Open Booking.com Assistant">${ic('ai')}</button>`;
+Object.assign(S,{pr:{name:PROP,type:'Entire apartment',addr:'Example Street 12, Vilnius, Lithuania (fictional)',ct:'+370 600 00000 (fictional)',ds:'Bright apartment close to the Old Town. (Fictional description.)',g:4,br:1,bd:2,ba:1},ph:[['Living room'],['Bedroom'],['Balcony'],['Kitchen'],['Bathroom']],am:{'Wi-Fi':1,'Kitchen':1,'Heating':1,'Washing machine':1,'Air conditioning':0,'Parking':0,'Pet-friendly':0,'Swimming pool':0},ru:{smoke:0,party:0,pets:0,qf:'22:00',qt:'07:00'},ci:{in:'15:00',out:'11:00',ins:'Self check-in with a key box next to the front door.',key:'The key box code is shared in the guest conversation on the day of arrival.'},pol:'Moderate',pd:'Moderate',iss:[],it:'Maintenance needed',sup:[{id:'SR-1042',t:'Question about payout schedule',s:'Answered'}],wm:'2026-11',asst:[{f:'g',t:'Hi! I’m the Booking.com Assistant. Ask me about prices, availability, cancellations, photos or payouts.'}]});
+const IL='<div class="warn">Illustrative prototype information, not official Booking.com policy. Needs verification in the Booking.com Partner Hub.</div>';
+const POL={Flexible:['Refundable','Free guest cancellation until 1 day before check-in',1],Moderate:['Refundable','Free guest cancellation until 5 days before check-in',5],'Non-refundable':['Non-refundable','No refund if the guest cancels',null]};
+const kv2=(k,v)=>`<div class="kv"><span>${k}</span><span>${v}</span></div>`;
+const stb=r=>`<span class="bs ${r.st==='Completed'?'n':r.st==='Cancelled'?'rd':r.cr?'am':''}">${r.st==='Confirmed'&&r.cr?'Cancellation requested':r.st}</span>`;
+const cxCard=r=>{if(r.st==='Completed')return'';const pn=r.pol||'Moderate',p=POL[pn];
+if(r.st==='Cancelled')return `<div class="cd" style="border-color:var(--er)"><h3 style="color:var(--er)">Cancelled by ${r.by}</h3>${kv2('Cancelled on',r.cd)}${kv2('Original stay',f(r.in)+' – '+f(r.out))}${kv2('Policy',pn+' · '+p[0])}${kv2('Cancellation fee',r.fee)}${kv2('Payout impact',r.imp)}<div class="mu">These nights are available again in your calendar.</div><button class="t" style="display:block;font-weight:700;padding:8px 0" data-a="cxinfo:${r.id}">Cancellation policy details</button></div>`;
+return `<div class="cd"><h3>Cancellation</h3>${r.cr?'<div class="warn"><b>Cancellation requested</b><br>Awaiting Booking.com review. The reservation stays active until it is confirmed.</div>':''}${kv2('Guest policy',pn+' · '+p[0])}${kv2('Free cancellation until',p[2]?f(add(r.in,-p[2])):'Not available')}${kv2('If the guest cancels',p[2]?'No fee before the deadline':'Guest pays the full amount')}<button class="t" style="display:block;font-weight:700;padding:8px 0" data-a="cxinfo:${r.id}">Cancellation policy details</button></div>`};
+const ciCard=()=>`<div class="cd"><h3>Check-in information</h3>${kv2('Check-in from',S.ci.in)}${kv2('Check-out until',S.ci.out)}<div style="padding:8px 0">${esc(S.ci.ins)}</div><div class="mu">${esc(S.ci.key)}</div><button class="t" style="display:block;font-weight:700;padding:8px 0" data-a="sub:ci">Edit check-in information</button></div>`;
+const REAS=['Property unavailable','Maintenance or safety issue','Emergency circumstances','Guest-related issue','Other'],OUT=['ok','req','req','sup','no'];
+const OTXT={req:'Booking.com will review your request. The reservation stays active until they confirm.',ok:'Simulated outcome: the cancellation is confirmed straight away, the dates are released and the guest is told.',sup:'This reason needs a conversation with Booking.com support. It can’t be cancelled from the app.',no:'Cancellation isn’t permitted from the app for this reason. Contact Booking.com support if you still need help.'};
+const WM={'2026-09':[1900,6,[['2 Oct','Payout – September stays',1615,'Paid']]],'2026-10':[2240,7,[['3 Nov','Payout – October stays',1359,'Paid'],['8 Nov','Payout – Anna Virtanen stay',545,'Processing','p1']]],'2026-11':[1720,5,[['13 Nov','Expected payout – Marta Kowalska',420,'Pending','r1'],['18 Nov','Expected payout – Daniel Okafor',442,'Pending','r2'],['2 Dec','Expected payout – Sofia Rossi',600,'Pending','r3']]]};
+const SUBT={wallet:'Wallet and earnings',photos:'Photos',details:'Property details',amen:'Amenities',ci:'Check-in information',rules:'House rules',pol:'Cancellation policy',iss:'Report an issue',sup:'Help and support'};
+const SUG={home:['How do I contact support?','When will I receive my payout?','What happens if a guest cancels?'],cal:['How do I change my nightly price?','How can I block dates?'],res:['What happens if a guest cancels?','Can I cancel a reservation?'],inbox:['How do I message a guest?','How do I contact support?'],prop:['How do I update my property photos?','When will I receive my payout?','How do I contact support?']};
+function ai(q){q=q.toLowerCase();const h=(...w)=>w.some(x=>q.includes(x)),E='I may not be able to resolve this directly. Would you like to contact our support team?';
+if(h('dispute','problem','missing','account','suspend','restrict','urgent','safety','emergency','fire','injur','complaint','legal','refund','penalt','fraud'))return{t:E,e:1};
+if(h('price','rate'))return{t:'Open Calendar, select the nights, tap Edit price, enter the new nightly price in EUR, then review and confirm.'};
+if(h('block','unavailab'))return{t:'Open Calendar, select a date or range, tap Block dates and confirm. Booked nights can’t be blocked.'};
+if(h('cancel'))return{t:'Each reservation shows its guest cancellation policy, deadline and fees. Cancelling as a host is separate: open the reservation and choose “Need to cancel this reservation?”. Rules shown here are illustrative and need verification.'};
+if(h('photo'))return{t:'Go to Property → Photos. You can add, replace, reorder and delete photos, and choose the main photo.'};
+if(h('payout','earning','wallet','paid','money'))return{t:'Go to Property → Wallet and earnings for received money, pending payouts and estimated net earnings. Payout timing here is illustrative; your real schedule depends on your payment settings.'};
+if(h('message','guest','inbox'))return{t:'Open Inbox or a reservation and choose Message to write to the guest.'};
+if(h('support','contact','human','person','agent','help'))return{t:E,e:1};
+return{t:'I’m not sure about that. '+E,e:1}}
+function R2(){render();const q=document.getElementById('am');if(q)q.scrollTop=q.scrollHeight;const i=document.getElementById('ain');if(i)i.focus()}
+const sw=(on,l,s,a)=>`<button class="sw ${on?'on':''}" role="switch" aria-checked="${!!on}" data-a="${a}"><span>${l}<br><small class="mu">${s}</small></span><i></i></button>`;
+const inp=(id,l,v,t='text')=>`<label class="l" for="${id}">${l}</label><input class="in" id="${id}" type="${t}" value="${esc(v)}">`;
+const prop=()=>{const row=(k,t,s)=>`<button class="cd" data-a="sub:${k}"><div class="row"><div class="g"><h3>${t}</h3><div class="mu">${s}</div></div>${ic('chev')}</div></button>`;
+return row('wallet','Wallet and earnings','Money received, still to come, estimated net earnings')+row('photos','Photos',S.ph.length+' photos')+row('details','Property details',esc(S.pr.name))+row('amen','Amenities',Object.values(S.am).filter(Boolean).length+' of 8 available')+row('ci','Check-in information','From '+S.ci.in+' · until '+S.ci.out)+row('rules','House rules','Smoking, parties, pets, quiet hours')+row('pol','Cancellation policy',S.pol)+row('iss','Report an issue',S.iss.length+' recorded')+row('sup','Help and support','Contact Booking.com support (simulated)')+'<h2 style="margin-top:16px">Overview</h2>'+prop0()};
+const subs={
+photos(){return `<p class="mu">The first photo is your main photo. Tap a photo to manage it.</p><div class="pg">${S.ph.map((p,i)=>`<button class="pt ${i?'':'m'}" data-a="pho:${i}">${i?'':'<span class="tg">Main photo</span>'}${ic('img')}${p[0]}</button>`).join('')}</div>${S.ph.length?'':'<div class="empty"><b>No photos yet</b>Add a photo to show guests your property.</div>'}<button class="b p" data-a="phadd">Add photo</button><p class="mu">Prototype: photos are placeholders. Nothing is uploaded.</p>`},
+details(){const p=S.dr||S.pr;return `<div class="cd"><h3>Basics</h3>${inp('d_name','Property name',p.name)}<label class="l" for="d_type">Property type</label><select class="in" id="d_type">${['Entire apartment','Private room','House','Hotel room'].map(o=>`<option ${o===p.type?'selected':''}>${o}</option>`).join('')}</select><label class="l" for="d_ds">Description</label><textarea class="in" id="d_ds" rows="4">${esc(p.ds)}</textarea></div><div class="cd"><h3>Address and contact</h3>${inp('d_addr','Address',p.addr)}${inp('d_ct','Main contact',p.ct)}</div><div class="cd"><h3>Capacity</h3>${inp('d_g','Maximum guests',p.g,'number')}${inp('d_br','Bedrooms',p.br,'number')}${inp('d_bd','Beds',p.bd,'number')}${inp('d_ba','Bathrooms',p.ba,'number')}</div>${S.fe?`<div class="emb">${S.fe}</div>`:''}<button class="b p" data-a="dsave">Save changes</button><button class="b s" data-a="back">Cancel</button>`},
+amen(){return `<p class="mu">Switch on what your guests can use. Changes are saved automatically.</p><div class="cd">${Object.keys(S.am).map((k,i)=>sw(S.am[k],k,S.am[k]?'Available':'Not available','am:'+i)).join('')}</div>`},
+ci(){return `<div class="cd">${inp('c_in','Check-in from',S.ci.in,'time')}${inp('c_out','Check-out until',S.ci.out,'time')}<label class="l" for="c_ins">Check-in instructions</label><textarea class="in" id="c_ins" rows="3">${esc(S.ci.ins)}</textarea><label class="l" for="c_key">Key collection or access</label><textarea class="in" id="c_key" rows="3">${esc(S.ci.key)}</textarea></div><button class="b p" data-a="cisave">Save changes</button><button class="b s" data-a="back">Cancel</button>`},
+rules(){return `<div class="cd">${sw(S.ru.smoke,'Smoking',S.ru.smoke?'Allowed':'Not allowed','ru:smoke')}${sw(S.ru.party,'Parties and events',S.ru.party?'Allowed':'Not allowed','ru:party')}${sw(S.ru.pets,'Pets',S.ru.pets?'Allowed':'Not allowed','ru:pets')}</div><p class="mu">Switches save immediately.</p><div class="cd"><h3>Quiet hours</h3>${inp('q_f','From',S.ru.qf,'time')}${inp('q_t','Until',S.ru.qt,'time')}<button class="b p" data-a="rsave">Save quiet hours</button></div>`},
+pol(){return `${IL}<p class="mu">This is the policy guests see when they book your property. Available options depend on Booking.com rules, your property and your contract. It applies to new bookings, not to reservations you already have.</p>${Object.keys(POL).map(k=>`<button class="opt ${S.pd===k?'on':''}" data-a="pol:${k}"><b>${k}</b> · ${POL[k][0]}<div class="mu">${POL[k][1]}</div></button>`).join('')}<button class="t" style="display:block;font-weight:700;padding:6px 0" data-a="cxinfo:">Understand this policy</button><button class="b p ${S.pd===S.pol?'off':''}" data-a="polsave">Save policy</button>`},
+iss(){const T=['Broken equipment','Cleaning issue','Maintenance needed','Safety issue','Other'];return `<div class="tabs" style="flex-wrap:wrap">${T.map(t=>`<button class="${S.it===t?'on':''}" data-a="it:${t}">${t}</button>`).join('')}</div>${S.it==='Safety issue'?'<div class="warn">In an urgent safety situation, contact emergency services first, then Booking.com support.</div>':''}<label class="l" for="i_d">What happened?</label><textarea class="in" id="i_d" rows="3" maxlength="300">${esc(S.id||'')}</textarea>${S.fe?`<p class="em">${S.fe}</p>`:''}<button class="b p" data-a="isave">Save issue</button><h2 style="margin-top:16px">Recorded issues</h2>${S.iss.length?S.iss.map(i=>`<div class="cd"><h3>${i.t}</h3><div>${esc(i.d)}</div><div class="mu">${i.date}</div></div>`).join(''):'<div class="empty">No issues recorded</div>'}`},
+sup(){return `<div class="warn">Simulated support screen. No real Booking.com specialist is contacted.</div><div class="cd"><h3>Send a message to support</h3><textarea class="in" id="sm" rows="4" maxlength="500" placeholder="Describe your question or problem">${esc(S.sd||'')}</textarea>${S.fe?`<p class="em">${S.fe}</p>`:''}<button class="b p" data-a="ssend">Send message</button></div><div class="cd"><h3>Request a callback</h3><div class="mu">Simulated: a callback request is added to your list below.</div><button class="b s" data-a="scall">Request a callback</button></div><h2>Your support requests</h2>${S.sup.map(s=>`<div class="cd"><div class="row"><div class="g"><h3>${s.id}</h3><div class="mu">${esc(s.t)}</div></div><span class="bs n">${s.s}</span></div></div>`).join('')}`},
+wallet(){const k=S.wm,[g,b,t]=WM[k],ded=Math.round(g*.15),net=g-ded,rec=t.filter(x=>x[3]==='Paid').reduce((s,x)=>s+x[2],0),ks=Object.keys(WM),mx=Math.max(...ks.map(q=>WM[q][0]*.85)),e=n=>'€'+n.toLocaleString('en'),lb=q=>MN[+q.split('-')[1]-1];
+return `<div class="tabs">${ks.map(q=>`<button class="${q===k?'on':''}" data-a="wm:${q}">${lb(q)} ${q.slice(0,4)}</button>`).join('')}</div><div class="warn">Illustrative prototype data. Real payouts depend on your payment settings in the Booking.com Extranet.</div>
+<div style="display:flex;gap:8px"><div class="cd" style="flex:1"><div class="mu">Received</div><h2 style="margin:2px 0;color:var(--ok)">${e(rec)}</h2><div class="mu">Already transferred to you</div></div><div class="cd" style="flex:1"><div class="mu">Still to come</div><h2 style="margin:2px 0">${e(net-rec)}</h2><div class="mu">Pending or processing</div></div></div>
+<div class="cd"><div class="mu">Estimated net earnings</div><h2 style="font-size:26px;margin:2px 0">${e(net)}</h2><div class="mu">Gross revenue minus deductions. Expenses you haven’t entered are not included, so this is not your profit.</div></div>
+<div class="cd"><h3>Breakdown</h3>${kv2('Bookings',b)}${kv2('Gross booking revenue',e(g))}${kv2('Deductions (illustrative 15%)','−'+e(ded))}${kv2('Other recorded costs','€0 · none entered')}${kv2('Estimated net earnings',e(net))}</div>
+<div class="cd"><h3>Estimated net by month</h3><div class="br">${ks.map(q=>{const n=Math.round(WM[q][0]*.85);return `<div class="${q===k?'on':''}">${e(n)}<b style="height:${Math.round(n/mx*60)}%"></b>${lb(q)}</div>`}).join('')}</div></div>
+<h2>Transactions</h2>${t.map((x,i)=>`<button class="cd" data-a="tx:${i}"><div class="row"><div class="g"><h3>${e(x[2])}</h3><div class="mu">${x[1]} · ${x[0]}</div></div><span class="bs ${x[3]==='Paid'?'':x[3]==='Processing'?'am':'n'}">${x[3]}</span></div></button>`).join('')}`}};
+function modal2(m,X){const bt=(a,l,c='b s')=>`<button class="${c}" data-a="${a}">${l}</button>`;
+if(m.t==='ai'){const sg=SUG[S.view&&S.view.t==='sub'?'prop':S.tab]||SUG.home;return `${X}<h2>Booking.com Assistant</h2><p class="mu" style="margin:-6px 0 8px">Simulated assistant for this prototype. It doesn’t use real Booking.com data.</p><div class="ms" id="am" style="max-height:36vh;overflow:auto">${S.asst.map(x=>`<div class="m ${x.f}">${esc(x.t)}${x.e?'<button class="b s" style="margin-top:8px;background:var(--cd)" data-a="sup">Talk to a support specialist</button>':''}</div>`).join('')}</div><div class="tabs" style="flex-wrap:wrap;margin:10px 0">${sg.map((s,i)=>`<button data-a="asug:${i}">${s}</button>`).join('')}</div><div class="row"><input class="in" id="ain" placeholder="Ask a question…" style="margin:0" aria-label="Ask a question" maxlength="200"><button class="b p" style="width:auto;margin:0" data-a="asend">Send</button></div>`}
+if(m.t==='cxinfo')return `${X}<h2>Understand cancellations</h2>${IL}<h3>1. Guest cancellation policy</h3><p class="mu">Decides what happens when a guest cancels: deadline, fee and refund. Shown on each reservation.</p><h3>2. Your property’s policy settings</h3><p class="mu">What you offer guests (Property → Cancellation policy). Options depend on Booking.com rules and your contract.</p><h3>3. Cancelling as a host</h3><p class="mu">Separate from the two above. You can’t set your own rules for cancelling confirmed reservations. Booking.com’s requirements apply and support or approval may be needed. Consequences for you, such as fees or helping the guest find alternative accommodation, may apply.</p>${bt('mx','Got it','b p')}`;
+if(m.t==='tx'){const x=WM[S.wm][2][m.i],r=x[4]&&R(x[4]);return `${X}<h2>${x[1]}</h2>${kv2('Amount','€'+x[2])}${kv2('Date',x[0])}${kv2('Status',x[3])}${r?kv2('Reservation',r.g+' · '+f(r.in)+' – '+f(r.out)):''}<p class="mu">${x[3]==='Paid'?'Transferred to you.':x[3]==='Processing'?'On its way to you.':'Not paid out yet. Expected after the stay (illustrative).'}</p>${r?bt('txres:'+r.id,'View reservation'):''}${bt('mx','Close','b p')}`}
+if(m.t==='pho'){const i=m.i,n=S.ph.length;return `${X}<h2>${S.ph[i][0]}</h2>${i?bt('phmain:'+i,'Set as main photo','b p'):'<div class="sum">This is your main photo</div>'}${i?bt('phmv:'+i+':-1','Move earlier'):''}${i<n-1?bt('phmv:'+i+':1','Move later'):''}${bt('phrep:'+i,'Replace photo')}${bt('phdel:'+i,'Delete photo','b t')}`}
+if(m.t==='phpick')return `${X}<h2>${m.m==='add'?'Add photo':'Replace photo'}</h2><p class="mu">Choose a placeholder to simulate a photo.</p>${['Living room','Bedroom','Kitchen','Bathroom','Balcony','Exterior'].map(k=>bt('phsel:'+k,k)).join('')}`;
+if(m.t==='phdel')return `${X}<h2>Delete this photo?</h2><p>${S.ph[m.i][0]}${m.i===0?' is your main photo. The next photo becomes the main photo.':' will be removed from your property.'}</p>${bt('phdelok:'+m.i,'Delete photo','b p')}${bt('mx','Keep photo')}`;
+if(m.t==='cx'){const c=S.cxs,r=R(c.id),oc=OUT[c.i];let b;
+if(c.step==='info')b=`<h2>Before you cancel</h2>${IL}<p>Cancelling a confirmed reservation affects a guest’s plans, so it works differently from other changes.</p><div class="cb"><h3>For the guest</h3><div class="mu">Their confirmed stay would be cancelled. They may need to find other accommodation.</div></div><div class="cb"><h3>For you</h3><div class="mu">Your guest cancellation policy doesn’t apply to you. Booking.com’s requirements decide whether you can cancel here or must contact support. You may need to help the guest find alternative accommodation.</div></div><div class="cb"><h3>For money</h3><div class="mu">Fees or penalties may apply to you. Amounts depend on Booking.com’s requirements.</div></div>${bt('cxs:reason','Continue','b p')}${bt('mx','Go back and keep the reservation')}`;
+else if(c.step==='reason')b=`<h2>Why do you need to cancel?</h2>${REAS.map((q,i)=>`<button class="opt ${c.i===i?'on':''}" data-a="cxr:${i}">${q}</button>`).join('')}${c.err?'<p class="em">Select a reason to continue.</p>':''}${bt('cxs:review','Continue','b p')}${bt('cxs:info','Back')}`;
+else if(c.step==='review')b=`<h2>Review your request</h2><div class="cd">${kv2('Guest',r.g)}${kv2('Stay',f(r.in)+' – '+f(r.out))}${kv2('Reason',REAS[c.i])}</div><div class="warn"><b>What happens next</b><br>${OTXT[oc]}</div>${oc==='req'?'<p class="mu">Submitting sends a request. It does not cancel the reservation.</p>':''}${bt('cxgo',oc==='req'?'Submit request':oc==='ok'?'Confirm cancellation':'Talk to a support specialist','b p')}${bt('cxs:reason','Back')}${bt('mx','Abandon and keep the reservation','b t')}`;
+else b=`<div class="ctr"><div class="ok">${ic('check')}</div><h2>${oc==='req'?'Cancellation request submitted':'Cancellation confirmed'}</h2>${oc==='req'?'<span class="pill">Status: Awaiting Booking.com review</span><p>Your reservation is not cancelled yet.</p>':'<p>The reservation is cancelled and the dates are available again (simulated).</p>'}</div>${oc==='req'?'<div class="cb" style="text-align:left"><h3>What happens next</h3><ol class="nl"><li>Booking.com reviews your request.</li><li>Until then, the reservation stays active. Prepare for the guest as usual.</li><li>You’ll be notified when Booking.com decides.</li><li>Follow the status on Home or in this reservation.</li></ol></div>':''}${bt('mx','Done','b p')}`;
+return `${c.step==='done'?'':X}${b}`}
+return ''}
+function act2(a,x,y,el){const v=id=>{const e=document.getElementById(id);return e?e.value:''},C=S.cxs;
+switch(a){
+case 'sub':S.tab='prop';S.view={t:'sub',k:x};S.fe=null;S.dr=null;S.pd=S.pol;S.id='';S.sd='';break;
+case 'ai':S.modal={t:'ai'};return R2(),true;
+case 'asug':case 'asend':{const q=a==='asug'?(SUG[S.view&&S.view.t==='sub'?'prop':S.tab]||SUG.home)[+x]:v('ain').trim();if(!q)return true;S.asst.push({f:'h',t:q},Object.assign({f:'g'},ai(q)));return R2(),true}
+case 'sup':S.modal=null;S.tab='prop';S.view={t:'sub',k:'sup'};S.fe=null;break;
+case 'wm':S.wm=x;break;
+case 'tx':S.modal={t:'tx',i:+x};break;
+case 'txres':S.modal=null;S.tab='res';S.view={t:'res',id:x};break;
+case 'pho':S.modal={t:'pho',i:+x};break;
+case 'phadd':if(S.ph.length>=10){toast('You can add up to 10 photos');return true}S.modal={t:'phpick',m:'add'};break;
+case 'phrep':S.modal={t:'phpick',m:'rep',i:+x};break;
+case 'phsel':{const m=S.modal;if(m.m==='add')S.ph.push([x]);else S.ph[m.i]=[x];S.modal=null;toast(m.m==='add'?'Photo added':'Photo replaced');return true}
+case 'phmain':S.ph.unshift(S.ph.splice(+x,1)[0]);S.modal=null;toast('Main photo updated');return true;
+case 'phmv':{const i=+x,j=i+ +y,t=S.ph[i];S.ph[i]=S.ph[j];S.ph[j]=t;S.modal=null;toast('Photo order updated');return true}
+case 'phdel':S.modal={t:'phdel',i:+x};break;
+case 'phdelok':S.ph.splice(+x,1);S.modal=null;toast('Photo deleted');return true;
+case 'dsave':{const d={name:v('d_name').trim(),type:v('d_type'),ds:v('d_ds'),addr:v('d_addr'),ct:v('d_ct'),g:+v('d_g'),br:+v('d_br'),bd:+v('d_bd'),ba:+v('d_ba')};
+if(!d.name){S.dr=d;S.fe='Enter a property name.';break}if(!(d.g>=1&&d.g<=20)){S.dr=d;S.fe='Maximum guests must be between 1 and 20.';break}
+S.pr=d;PROP=d.name;S.dr=null;S.fe=null;S.view=null;toast('Property details saved');return true}
+case 'am':{const k=Object.keys(S.am)[+x];S.am[k]=S.am[k]?0:1;break}
+case 'ru':S.ru[x]=S.ru[x]?0:1;break;
+case 'rsave':S.ru.qf=v('q_f');S.ru.qt=v('q_t');toast('Quiet hours saved');return true;
+case 'cisave':S.ci={in:v('c_in'),out:v('c_out'),ins:v('c_ins'),key:v('c_key')};S.view=null;toast('Check-in information saved');return true;
+case 'pol':S.pd=x;break;
+case 'polsave':if(S.pd===S.pol)return true;S.pol=S.pd;toast('Cancellation policy saved for new bookings');return true;
+case 'cxinfo':S.modal={t:'cxinfo'};break;
+case 'it':S.id=v('i_d');S.it=x;break;
+case 'isave':{const d=v('i_d').trim();if(!d){S.id='';S.fe='Describe the issue before saving.';break}S.iss.unshift({t:S.it,d,date:'7 Nov 2026'});S.id='';S.fe=null;toast('Issue recorded');return true}
+case 'ssend':{const t=v('sm').trim();if(!t){S.sd='';S.fe='Write a message before sending.';break}S.sup.unshift({id:'SR-'+(1043+S.sup.length),t,s:'Simulated – sent'});S.sd='';S.fe=null;toast('Message added to your requests (simulated)');return true}
+case 'scall':S.sup.unshift({id:'SR-'+(1043+S.sup.length),t:'Callback request',s:'Simulated – requested'});toast('Callback request recorded (simulated)');return true;
+case 'cx':S.cxs={id:x,step:'info',i:-1};S.modal={t:'cx'};break;
+case 'cxr':C.i=+x;C.err=0;break;
+case 'cxs':if(x==='review'&&C.i<0){C.err=1;break}C.step=x;break;
+case 'cxgo':{const oc=OUT[C.i],r=R(C.id);if(oc==='sup'||oc==='no'){S.modal=null;S.tab='prop';S.view={t:'sub',k:'sup'};S.fe=null;break}
+if(oc==='req')r.cr=1;else{r.st='Cancelled';r.by='host';r.cd='7 Nov 2026';r.fee='Host cancellation: consequences reviewed by Booking.com (illustrative)';r.imp='Payout removed (illustrative)'}C.step='done';break}
+default:return false}
+render();return true}
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.id==='ain'){e.preventDefault();act2('asend')}});
+render();
+</script></body></html>
